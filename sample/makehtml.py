@@ -1,27 +1,24 @@
 with open("chat.html", "w") as f:
-    print >>f, """\
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<style>
-.name {
-    font-weight: bold;
-    float: right;
-    clear: right;
-    width: 70px;
-}
-.text {
-    float: right;
-    margin-right: 10px;
-}
-.message {
-    padding: 5px 0 5px 0;
-    border-bottom: 1px solid #ccc;
-    float: right;
-    clear: right;
-    width: 600px;
-}
-</style>
-    """
     print >>f, "<body dir='rtl'>"
+    print >>f, """\
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+    table, tr, td {
+        border-collapse: collapse;
+    }
+    td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        vertical-align: top;
+        border-bottom: 1px solid #ccc;
+    }
+    td.name {
+        padding-left: 20px;
+        font-weight: bold;
+    }
+    </style>
+    """
+    print >>f, "<table>"
     prevname = None
     message = []
     for name, text in eval(open("chat.data").read()):
@@ -31,8 +28,8 @@ with open("chat.html", "w") as f:
         if not prevname:
             prevname = name
         if prevname and name != prevname:
-            print >>f, ("<div class='message'><div class='name'>%s</div><div class='text'>%s</div></div>" % 
-                (prevname, "<br>".join(message[:-1]))).encode("utf8")
+            print >>f, ("<tr><td class='name'>%s</td><td class='message'>%s</td></tr>" % (prevname, "<br>".join(message[:-1]))).encode("utf8")
             message = message[-1:]
             prevname = name
+    print >>f, "</table>"
     print >>f, "</body>"
