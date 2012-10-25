@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="chat.js"></script>
+    <link rel="stylesheet" type="text/css" href="chat.css">
+  </head>
+  <body>
+    <div id="history">
+      <p><strong>אני: </strong>אני בטיפול ממושך להבראת דפוסים לא בריאים<br>אחרי שבמשך שנים החרבתי מערכות יחסים בזו אחר זו<br>ולא תכננתי להכנס למערכת היחסים הזו<br>ואני מאד חרדה להחריב גם אותה<br>ואני סובלת, ליטרלי<br>כאב<br>אמיתי</p>
+      <p><strong>תומך: </strong>מה יחריב את היחסים?</p>
+      <p><strong>אני: </strong>שאני אחזור על השגיאות<br>שאני לא אצליח בחיים האישיים שלי<br>וזה יהפוך אותי לבן אדם שלא ראוי לחיות איתו<br></p>
+      <p><strong>תומך: </strong>מה יהפוך אותך לאדם שלא ראוי לחיות איתו?</p>
+      <p><strong>אני: </strong>שאני אתקע, שאני לא אתקדם, שאני לא אוכל לתרום במידה שווה<br>הקטע הכלכלי מפריע לי באופן מיוחד</p>
+      <p><strong>תומך: </strong>מה קורה בתחום הכלכלי?</p>
+      <p><strong>אני: </strong>דווקא עשיתי קפיצה לא רעה בשנה פלוס האחרונות<br>אבל<br>אני לא יכולה להגיע לרמות שכר, זה נורא מפגר<br>כשאני קוראת את המשפטים של עצמי<br>אבל אלהים כמה שזה כואב</p>
+      <p><strong>תומך: </strong>מה זה אומר בשבילך שאת לא יכולה להגיע לרמות השכר של חבר שלך?</p>
+    </div>
+    <form action="javascript:submitMessage()">
+      <textarea id="message" onkeypress="onMessageKey()"></textarea>
+      <p class="note">לחץ פעמיים על Enter בכדי לשלוח.</p>
+      <input type="submit" value="שלח הודעה"></input>
+    </form>
+  </body>
+  <script>document.getElementById("message").focus();</script>
+</html>
