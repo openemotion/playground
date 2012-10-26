@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <script type="text/javascript" src="jquery-1.8.2.js"></script>
     <script type="text/javascript" src="chat.js"></script>
     <link rel="stylesheet" type="text/css" href="chat.css">
   </head>
@@ -16,11 +17,9 @@
       <p><strong>אני: </strong>דווקא עשיתי קפיצה לא רעה בשנה פלוס האחרונות<br>אבל<br>אני לא יכולה להגיע לרמות שכר, זה נורא מפגר<br>כשאני קוראת את המשפטים של עצמי<br>אבל אלהים כמה שזה כואב</p>
       <p><strong>תומך: </strong>מה זה אומר בשבילך שאת לא יכולה להגיע לרמות השכר של חבר שלך?</p>
     </div>
-    <form action="javascript:submitMessage()">
-      <textarea id="message" onkeypress="onMessageKey()"></textarea>
-      <p class="note">לחץ פעמיים על Enter בכדי לשלוח.</p>
-      <input type="submit" value="שלח הודעה"></input>
+    <textarea id="message"></textarea>
+    <p class="note">לחץ פעמיים על Enter בכדי לשלוח.</p>
+    <button id="submit">שלח הודעה</button>
     </form>
   </body>
-  <script>document.getElementById("message").focus();</script>
 </html>
