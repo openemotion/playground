@@ -3,7 +3,8 @@ $(function() {
         text = $("#message").val();
         text = text.replace(/^\n*/, "").replace(/\n*$/, "").replace(/\n/g, "<br>");
         author = $("#author").val()
-        // $("#history").append("<p><strong>" + author + "</strong>: " + text + "</p>");
+        // FIXME: this duplicates the code in templates/messages.html
+        $("#history").append("<p><strong>" + author + "</strong>: " + text + "</p>");
         $("#message").val("").focus();
         $.post("/message", {author : author, text : text}, function (data, textStatus, jqXHR) {
             reloadHistory();
