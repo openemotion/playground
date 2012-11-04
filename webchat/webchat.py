@@ -1,38 +1,49 @@
-from flask import Flask, render_template, request
-import sqlalchemy as sql
+import sqlite3
+from flask import Flask, render_template, request, g
 
 app = Flask(__name__)
+app.config.from_object("config")
 
 @app.route("/")
 def main():
-    return render_template("chat.html")
+    messages = g.db.get_messages()
+    return render_template("chat.html", messages=messages)
+
+@app.route("/history")
+def history():
+    messages = g.db.get_messages()
+    return render_template("messages.html", messages=messages)
 
 @app.route("/message", methods=["POST"])
 def message():
-    text = request.form["text"]
-    storage.store_message("bla", text)
+    g.db.store_message(request.form["author"], request.form["text"])
     return ""
 
-class Storage(object):
-    def __init__(self):
-        metadata = sql.MetaData()
-        engine = sql.create_engine("sqlite:///data.db", isolation_level="SERIALIZABLE")
-        self.messages = sql.Table('messages', metadata,
-            sql.Column('id', sql.Integer, primary_key=True),
-            sql.Column('author', sql.String),
-            sql.Column('text', sql.String),
-         )
-        metadata.create_all(engine)
-        self.connection = engine.connect()
+@app.before_request
+def before_request():
+    g.db = Database(app.config["DATABASE"])
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
+
+class Database(object):
+    def __init__(self, filename):
+        self.connection = sqlite3.connect(filename)
 
     def get_messages(self):
-        for row in self.connection.execute(self.messages.select()):
-            yield dict(row)
+        cmd = "select author, text from messages"
+        cur = self.connection.execute(cmd)
+        for row in cur:
+            yield dict(author=row[0], text=row[1])
 
     def store_message(self, author, text):
-        self.connection.execute(self.messages.insert(), author=author, text=text)
+        self.connection.execute("insert into messages (author, text) values (?, ?)", [author, text])
+        self.connection.commit()
+
+    def close(self):
+        self.connection.close()
 
 if __name__ == '__main__':
-    storage = Storage()
     app.debug = True
     app.run()

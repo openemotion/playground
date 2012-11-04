@@ -2,10 +2,19 @@ $(function() {
     function submitMessage() {
         text = $("#message").val();
         text = text.replace(/^\n*/, "").replace(/\n*$/, "").replace(/\n/g, "<br>");
-        $("#history").append("<p><strong>אני</strong>: " + text + "</p>");
+        author = $("#author").val()
+        // $("#history").append("<p><strong>" + author + "</strong>: " + text + "</p>");
         $("#message").val("").focus();
-        $(document).scrollTop($(document).height());
-        $.post("/message", {text : text});
+        $.post("/message", {author : author, text : text}, function (data, textStatus, jqXHR) {
+            reloadHistory();
+        });
+    }
+
+    function reloadHistory() {
+        $.ajax("/history", {success: function (data, textStatus, jqXHR) {
+            $("#history").empty().append(data);
+            $(document).scrollTop($(document).height());
+        }});
     }
 
     $("#message").keypress(function(e) {
@@ -24,4 +33,5 @@ $(function() {
 
     $("#message").focus();
 
+    setInterval(reloadHistory, 1000);
 });

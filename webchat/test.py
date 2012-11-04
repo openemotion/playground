@@ -1,6 +1,6 @@
 import webchat
 
-s = webchat.Storage()
+s = webchat.Storage("data.db")
 
 s.store_message("eli", "hello world")
 
